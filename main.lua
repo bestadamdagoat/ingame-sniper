@@ -13,7 +13,7 @@ if executor == "Celery" or not identifyexecutor() then
     print(executor .. " is not supported (yet).")
     checkedexecutor = true
 end
-if executor == "ArceusX" or executor == "Evon" then
+if executor == "ArceusX" or executor == "Evon" or executor == "Valyse" then
     print(executor .. " is malware. Get rid of it ASAP.")
     checkedexecutor = true
 end
