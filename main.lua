@@ -1,17 +1,38 @@
 getgenv().assetid = Text
 getgenv().placeid = Text
 getgenv().buyitemafterteleport = false
+executor = identifyexecutor()
+checkedexecutor = false
 
-local response = request({
+print("Executor: " .. executor)
+if executor == "Electron" or executor == "Hydrogen" then
+    print(executor .. " is confirmed to be supported.")
+    checkedexecutor = true
+end
+if executor == "Celery" or not identifyexecutor() then
+    print(executor .. " is not supported (yet).")
+    checkedexecutor = true
+end
+if executor == "ArceusX" or executor == "Evon" then
+    print(executor .. " is malware. Get rid of it ASAP.")
+    checkedexecutor = true
+end
+if checkedexecutor == false then
+    print(executor .. " MIGHT be supported. Make sure it's compatible with UNC and MarketplaceService. If your executor is supported and you see this message, send a screenshot of this to BestAdam#9280 on Discord.")
+    checkedexecutor = true
+end
+
+local versionreq = request({
 	Url = "https://raw.githubusercontent.com/bestadamdagoat/ingame-sniper/main/VERSION.md",
 	Method = "GET",
 })
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+print("Don't worry, Rayfield IS loading. It might take a second due to it being a good UI.")
 local Window = Rayfield:CreateWindow({
-    Name = "SNIPE TOOL",
-    LoadingTitle = "Powered by the Rayfield Interface Suite",
-    LoadingSubtitle = "uhhhh hammed burger",
+    Name = "ingame-sniper",
+    LoadingTitle = "Loading the UI",
+    LoadingSubtitle = "i dunno what to put here gimme ideas. there's spiders in the walls they are crawling in your skin rip off your skin and get the spiders out.",
     ConfigurationSaving = {
         Enabled = false,
         FolderName = nil, -- Create a custom folder for your hub/game
@@ -35,7 +56,7 @@ local Window = Rayfield:CreateWindow({
 })
 
 local Tab = Window:CreateTab("Main") -- Title, Image
-local Section = Tab:CreateSection("Prompt Purchase (Sniper)")
+local Section = Tab:CreateSection("Prompt Purchase")
 local Input = Tab:CreateInput({
     Name = "Asset ID",
     PlaceholderText = "ex: 13023433259",
@@ -61,8 +82,9 @@ local Toggle = Tab:CreateToggle({
         end
     end,
 })
+local Paragraph = Tab:CreateParagraph({Title = "Info", Content = "This is for buying an item within a game. Don't use this unless you already have it executed prior to the item dropping. Running the two basic lines is much faster than loading the Rayfield UI every time."})
 
-local Section = Tab:CreateSection("Teleport")
+local Section = Tab:CreateSection("Teleport Sniper")
 local Input = Tab:CreateInput({
     Name = "Place ID",
     PlaceholderText = "ex: 263761432",
@@ -98,6 +120,26 @@ local Button = Tab:CreateButton({
         end
     end,
 })
+Paragraph:Set({Title = "Info", Content = "This is completely unrelated to the Prompt Purchase sniper and requires you to enter the info again."})
+
+local Section = Tab:CreateSection("Misc")
+local Button = Tab:CreateButton({
+    Name = "Find Subplaces",
+    Callback = function()
+        local pages = game:GetService("AssetService"):GetGamePlacesAsync()
+        while true do
+            for _,place in pairs(pages:GetCurrentPage()) do
+                print("Name: " .. place.Name)
+                print("PlaceId: " .. tostring(place.PlaceId))
+            end
+            if pages.IsFinished then
+                break
+            end
+            pages:AdvanceToNextPageAsync()
+        end
+    end,
+})
+local Paragraph = Tab:CreateParagraph({Title = "OUTPUTS TO THE CONSOLE", Content = "Press F9 to open the console."})
 
 local Tab = Window:CreateTab("Scripts") -- Title, Image
 local Button = Tab:CreateButton({
@@ -121,4 +163,4 @@ local Button = Tab:CreateButton({
 
 local Tab = Window:CreateTab("About") -- Title, Image
 local Section = Tab:CreateSection("Info")
-local Paragraph = Tab:CreateParagraph({Title = "Version 1.0", Content = "Latest Version is " .. response.Body .. " Make sure to launch using the script provided in the README. If you don't, you'll be running an outdated version! bestadamdagoat/ingame-sniper"})
+local Paragraph = Tab:CreateParagraph({Title = "Version 1.1", Content = "Latest Version is " .. versionreq.Body .. " \nMake sure to launch using the script provided in the README. If you don't, you'll be running an outdated version! bestadamdagoat/ingame-sniper"})
