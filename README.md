@@ -16,4 +16,6 @@ You can visit [this trello board](https://trello.com/b/AkToehxV/dev-board) to se
 
 If something doesn't work, open a bug report with a screenshot of the console. Don't open a report if your executor is incompatible (unless it is compatible and the checker says it's not). It can take a bit to execute, so don't get worried if it doesn't immediately open up.
 
+The teleport to place feature only works if you're in a game that allows 3rd party teleports.
+
 `loadstring(game:HttpGet('https://raw.githubusercontent.com/bestadamdagoat/ingame-sniper/main/main.lua'))()`
