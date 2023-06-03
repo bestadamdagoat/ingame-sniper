@@ -12,7 +12,7 @@ Current Features include:
 - Subplace Finder
 - Script Hub
 
-You can visit [this trello board](https://trello.com/b/AkToehxV/dev-board) to see upcoming features.
+You can visit [this board](https://github.com/users/bestadamdagoat/projects/4/views/1) to see upcoming features.
 
 If something doesn't work, open a bug report with a screenshot of the console. Don't open a report if your executor is incompatible (unless it is compatible and the checker says it's not). It can take a bit to execute, so don't get worried if it doesn't immediately open up.
 
