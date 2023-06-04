@@ -1,8 +1,9 @@
-getgenv().assetid = Text
-getgenv().placeid = Text
-getgenv().buyitemafterteleport = false
-executor = identifyexecutor()
-checkedexecutor = false
+local buyitemafterteleport = false
+local assetid = nil
+local placeid = nil
+getgenv().afterassetid = nil
+local executor = identifyexecutor()
+local checkedexecutor = false
 
 print("Executor: " .. executor)
 if executor == "Electron" or executor == "Hydrogen" then
@@ -62,7 +63,7 @@ local Input = Tab:CreateInput({
     PlaceholderText = "ex: 13023433259",
     RemoveTextAfterFocusLost = false,
     Callback = function(Text)
-        getgenv().assetid = Text
+        assetid = Text
     end,
 })
 local Button = Tab:CreateButton({
@@ -90,7 +91,7 @@ local Input = Tab:CreateInput({
     PlaceholderText = "ex: 263761432",
     RemoveTextAfterFocusLost = false,
     Callback = function(Text)
-        getgenv().placeid = Text
+        placeid = Text
     end,
 })
 local Input = Tab:CreateInput({
@@ -98,7 +99,7 @@ local Input = Tab:CreateInput({
     PlaceholderText = "ex: 13023433259",
     RemoveTextAfterFocusLost = false,
     Callback = function(Text)
-        writefile("afterassetid.txt", Text)
+        afterassetid = Text
     end,
 })
 local Toggle = Tab:CreateToggle({
@@ -106,7 +107,7 @@ local Toggle = Tab:CreateToggle({
     CurrentValue = false,
     Flag = "TPafterPurchase", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
-        getgenv().buyitemafterteleport = Value
+        buyitemafterteleport = Value
     end,
 })
 local Button = Tab:CreateButton({
@@ -124,6 +125,21 @@ Paragraph:Set({Title = "Info", Content = "This is completely unrelated to the Pr
 
 local Section = Tab:CreateSection("Misc")
 local Button = Tab:CreateButton({
+    Name = "Rejoin Game",
+    Callback = function()
+        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/bestadamdagoat/ingame-sniper/main/main.lua'))()")
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)
+    end,
+})
+local Input = Tab:CreateInput({
+    Name = "Join Game",
+    PlaceholderText = "ex: 13023433259",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Text)
+        game:GetService("TeleportService"):Teleport(Text, game:GetService("Players").LocalPlayer)
+    end,
+})
+local Button = Tab:CreateButton({
     Name = "Find Subplaces",
     Callback = function()
         local pages = game:GetService("AssetService"):GetGamePlacesAsync()
@@ -140,6 +156,24 @@ local Button = Tab:CreateButton({
     end,
 })
 local Paragraph = Tab:CreateParagraph({Title = "OUTPUTS TO THE CONSOLE", Content = "Press F9 to open the console."})
+
+local Tab = Window:CreateTab("Player") -- Title, Image
+local Input = Tab:CreateInput({
+    Name = "Speed",
+    PlaceholderText = "ex: 80",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Text)
+        game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = Text
+    end,
+})
+local Input = Tab:CreateInput({
+    Name = "Jump Height",
+    PlaceholderText = "ex: 80",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Text)
+        game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = Text
+    end,
+})
 
 local Tab = Window:CreateTab("Scripts") -- Title, Image
 local Button = Tab:CreateButton({
