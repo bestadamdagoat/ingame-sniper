@@ -1,3 +1,5 @@
+# ARCHIVED: this gui is VERY inefficient compared to current methods, might remake at some point
+
 # ingame-sniper
 Roblox In-Game UGC Sniper
 
